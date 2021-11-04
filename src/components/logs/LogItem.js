@@ -1,8 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
+import { useDispatch } from "react-redux";
+import { deleteLog } from "../../actions/logAction";
 
 const LogItem = ({ log }) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(deleteLog(log.id));
+  };
+
   return (
     <li className="collection-item">
       <div>
@@ -21,7 +29,9 @@ const LogItem = ({ log }) => {
           <Moment format="MMMM Do YYYY, h:mm:ss a">{log.date}</Moment>
         </span>
         <a href="#!" className="secondary-content">
-          <i className="material-icons grey-text">delete</i>
+          <i className="material-icons grey-text" onClick={handleDelete}>
+            delete
+          </i>
         </a>
       </div>
     </li>
