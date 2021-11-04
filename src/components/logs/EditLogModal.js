@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { useDispatch, useSelector } from "react-redux";
-import { CLEAR_CURRENT, GET_TECHS } from "../../types";
+import { CLEAR_CURRENT } from "../../types";
 import { updateLog } from "../../actions/logAction";
 import { getTechs } from "../../actions/techAction";
 
@@ -14,10 +14,10 @@ const EditLogModal = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (current != null) {
+    if (current !== null) {
       setMessage(current.message);
       setAttention(current.attention);
-      setTech(current.attention);
+      setTech(current.tech);
     }
   }, [current]);
 
@@ -69,17 +69,16 @@ const EditLogModal = () => {
             <select
               name="tech"
               value={tech}
-              className="brower-default"
+              className="browser-default"
               onChange={(e) => setTech(e.target.value)}
             >
               <option value="" disabled>
                 Select Technician
               </option>
-
-              {techs &&
-                techs.map((tech) => (
-                  <option value={tech.firstName + tech.lastName}>
-                    {tech.firstName + tech.lastName}
+              {techs !== null &&
+                techs.map((t) => (
+                  <option key={t.id} value={`${t.firstName} ${t.lastName}`}>
+                    {t.firstName} {t.lastName}
                   </option>
                 ))}
             </select>

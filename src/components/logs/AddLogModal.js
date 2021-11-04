@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addLog } from "../../actions/logAction";
 const AddLogModal = () => {
   const [message, setMessage] = useState("");
   const [attention, setAttention] = useState(false);
   const [tech, setTech] = useState("");
   const dispatch = useDispatch();
+  const techs = useSelector((state) => state.tech.techs);
 
   const onSubmit = () => {
     if (message === "" || tech === "") {
@@ -38,20 +39,24 @@ const AddLogModal = () => {
             </label>
           </div>
         </div>
+
         <div className="row">
           <div className="input-field">
             <select
               name="tech"
               value={tech}
-              className="brower-default"
+              className="browser-default"
               onChange={(e) => setTech(e.target.value)}
             >
               <option value="" disabled>
                 Select Technician
               </option>
-              <option value="John Doe">John Doe</option>
-              <option value="Sam Smith">Sam Smith</option>
-              <option value="Sara Wilson">Sara Wilson</option>
+              {techs !== null &&
+                techs.map((t) => (
+                  <option key={t.id} value={`${t.firstName} ${t.lastName}`}>
+                    {t.firstName} {t.lastName}
+                  </option>
+                ))}
             </select>
           </div>
         </div>
