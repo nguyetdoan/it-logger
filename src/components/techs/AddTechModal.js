@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
+import { useDispatch } from "react-redux";
+import { addTech } from "../../actions/techAction";
 
 const AddTechModal = () => {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const dispatch = useDispatch();
 
   const onSubmit = () => {
-    if (firstname === "" || lastname === "") {
+    if (firstName === "" || lastName === "") {
       M.toast({ html: "Please enter the first and last name" });
     } else {
-      setFirstname("");
-      setLastname("");
+      dispatch(addTech({ firstName, lastName }));
+      setFirstName("");
+      setLastName("");
     }
   };
 
@@ -23,10 +27,10 @@ const AddTechModal = () => {
             <input
               type="text"
               name="message"
-              value={firstname}
-              onChange={(e) => setFirstname(e.target.value)}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
             />
-            <label htmlFor="firstname" className="active">
+            <label htmlFor="firstName" className="active">
               First Name
             </label>
           </div>
@@ -36,10 +40,10 @@ const AddTechModal = () => {
             <input
               type="text"
               name="message"
-              value={lastname}
-              onChange={(e) => setLastname(e.target.value)}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             />
-            <label htmlFor="lastname" className="active">
+            <label htmlFor="lastName" className="active">
               Last Name
             </label>
           </div>
