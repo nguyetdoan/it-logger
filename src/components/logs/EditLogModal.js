@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { useDispatch, useSelector } from "react-redux";
-import { CLEAR_CURRENT } from "../../types";
+import { CLEAR_CURRENT, GET_TECHS } from "../../types";
 import { updateLog } from "../../actions/logAction";
+import { getTechs } from "../../actions/techAction";
 
 const EditLogModal = () => {
   const [message, setMessage] = useState("");
   const [attention, setAttention] = useState(false);
   const [tech, setTech] = useState("");
   const current = useSelector((state) => state.log.current);
+  const techs = useSelector((state) => state.tech.techs);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,6 +20,11 @@ const EditLogModal = () => {
       setTech(current.attention);
     }
   }, [current]);
+
+  useEffect(() => {
+    dispatch(getTechs());
+    // eslint-disable-next-line
+  }, []);
 
   const onSubmit = () => {
     if (message === "" || tech === "") {
@@ -68,9 +75,13 @@ const EditLogModal = () => {
               <option value="" disabled>
                 Select Technician
               </option>
-              <option value="John Doe">John Doe</option>
-              <option value="Sam Smith">Sam Smith</option>
-              <option value="Sara Wilson">Sara Wilson</option>
+
+              {techs &&
+                techs.map((tech) => (
+                  <option value={tech.firstName + tech.lastName}>
+                    {tech.firstName + tech.lastName}
+                  </option>
+                ))}
             </select>
           </div>
         </div>
