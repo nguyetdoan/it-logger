@@ -4,6 +4,9 @@ import {
   SET_LOADING,
   ADD_LOG,
   DELETE_LOG,
+  SET_CURRENT,
+  CLEAR_CURRENT,
+  UPDATE_LOG,
 } from "../types";
 
 const initialState = {
@@ -15,6 +18,11 @@ const initialState = {
 
 const logReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_CURRENT:
+      return {
+        ...state,
+        current: action.payload,
+      };
     case GET_LOGS:
       return {
         ...state,
@@ -25,6 +33,14 @@ const logReducer = (state = initialState, action) => {
       return {
         ...state,
         logs: [...state.logs, action.payload],
+        loading: false,
+      };
+    case UPDATE_LOG:
+      return {
+        ...state,
+        logs: state.logs.map((log) =>
+          log.id === action.payload.id ? action.payload : log
+        ),
         loading: false,
       };
     case DELETE_LOG:
@@ -42,6 +58,11 @@ const logReducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null,
       };
     default:
       return state;

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Moment from "react-moment";
 import { useDispatch } from "react-redux";
 import { deleteLog } from "../../actions/logAction";
+import { SET_CURRENT } from "../../types";
 
 const LogItem = ({ log }) => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const LogItem = ({ log }) => {
           className={`modal-trigger ${
             log.attention ? "red-text" : "blue-text"
           }`}
+          onClick={() => dispatch({ type: SET_CURRENT, payload: log })}
         >
           {log.message}
         </a>
