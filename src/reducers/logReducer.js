@@ -7,6 +7,7 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_LOG,
+  SEARCH_LOGS,
 } from "../types";
 
 const initialState = {
@@ -24,6 +25,12 @@ const logReducer = (state = initialState, action) => {
         current: action.payload,
       };
     case GET_LOGS:
+      return {
+        ...state,
+        logs: action.payload,
+        loading: false,
+      };
+    case SEARCH_LOGS:
       return {
         ...state,
         logs: action.payload,
