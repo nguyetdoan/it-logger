@@ -38,4 +38,8 @@ const mapStateToProps = (state) => ({
   log: state.log,
 });
 
-export default connect(mapStateToProps, { getLogs })(Logs);
+const mapDispatchToProps = (dispatch) => ({
+  getLogs: () => dispatch(getLogs()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logs);
